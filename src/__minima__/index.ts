@@ -52,6 +52,18 @@ export function txPow(id: number | string) {
   });
 }
 
+export function txPowByAddress(address: string) {
+  return new Promise((resolve, reject) => {
+    (window as any).MDS.cmd(`txpow address:${address}`, function(response: any) {
+      if (response.status) {
+        return resolve(response.response);
+      }
+
+      return reject();
+    });
+  });
+}
+
 export function getManyTxPow(from: number, amount = 30) {
   const promises = [];
 

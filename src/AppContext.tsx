@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { createContext, useEffect, useMemo, useState } from "react";
-import { block, getManyTxPow, txPow, txPowById } from "./__minima__";
+import { block, getManyTxPow, txPow, txPowByAddress, txPowById } from "./__minima__";
 import format from "date-fns/format";
 
 export const appContext = createContext({} as any);
@@ -54,6 +54,30 @@ const AppProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
       }
     }
 
+    if (query !== '' && searchResults && Array.isArray(searchResults)) {
+      searchResults.forEach((transaction: any) => {
+
+        const date = new Date(Number(transaction.header.timemilli));
+        const day = format(date, 'dd');
+        const month = format(date, 'MMM');
+        const year = format(date, 'yyyy');
+
+        const str = `${day} ${month} ${year}`
+
+        if (!lib[str]) {
+          lib[str] = 1;
+        } else {
+          lib[str] += 1;
+        }
+      });
+
+      return {
+        data: transactions,
+        groups: Object.keys(lib),
+        groupCounts: Object.values(lib),
+      };
+    }
+
     if (query !== '' && searchResults) {
       const date = new Date(Number(searchResults.header.timemilli));
 
@@ -88,23 +112,37 @@ const AppProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   }, [transactions, query, searchResults]);
 
   const loadMore = () => {
-    getManyTxPow(transactions[transactions.length - 1].header.block).then((response) => {
-      setTransactions((prevState: any) => [...prevState, ...response]);
-    });
+    getManyTxPow(transactions[transactions.length - 1].header.block)
+      .then((response) => {
+        setTransactions((prevState: any) => [...prevState, ...response]);
+      });
   };
 
   const handleQuery = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    if (evt.target.value === '') {
+      setSearchResults(null);
+    }
     setQuery(evt.target.value);
   };
 
   const search = (evt: React.FormEvent) => {
     evt.preventDefault();
 
-    if (query.includes('0x')) {
+    if (query.includes('0x') || query.includes('Mx')) {
       txPowById(query).then((response) => {
         setSearchResults(response);
       }).catch(() => {
-        setSearchResults(false);
+        txPowByAddress(query).then((response: any) => {
+          // search by address is returned as an array so only
+          // set search results if the array count is higher than 0
+          if (response.length > 0) {
+            setSearchResults(response);
+          } else {
+            setSearchResults(false);
+          }
+        }).catch(() => {
+          setSearchResults(false);
+        });
       });
     } else {
       txPow(query).then((response) => {

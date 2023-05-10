@@ -41,7 +41,7 @@ const Dashboard = () => {
           <div className={`${scrollPosition === 0 ? 'opacity-100' :'opacity-0'} pt-4 pb-2 px-4`}>
             <div className="relative w-full">
               <form onSubmit={search}>
-                <input value={query} onChange={handleQuery} type="text" className="outline-none text-black w-full py-3 px-4 rounded" placeholder="Search by block or txpowid" />
+                <input value={query} onChange={handleQuery} type="text" className="outline-none text-black w-full py-3 pl-4 pr-12 rounded" placeholder="Search by address, block or txpowid" />
                 <button type="submit">
                   <svg className="active:scale-90 transition absolute top-3 right-3" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M18.3913 10.6957C18.3913 14.9458 14.9459 18.3913 10.6957 18.3913C6.44546 18.3913 3 14.9458 3 10.6957C3 6.44546 6.44546 3 10.6957 3C14.9459 3 18.3913 6.44546 18.3913 10.6957Z" stroke="#08090B" strokeWidth="2" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>

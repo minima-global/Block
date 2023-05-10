@@ -50,4 +50,10 @@ const toFixedIfNecessary = (value: string, dp: number = 9) => {
   return +parseFloat(value).toFixed( dp );
 }
 
-export { getPayoutTime, toFixedIfNecessary, getEstimatedPayoutTime };
+const isAddress = (address: string) => {
+  const startsCorrect = address.startsWith('0x') || address.startsWith('Mx');
+  const lengthCorrect = address.length > 58 && address.length < 67;
+  return startsCorrect && lengthCorrect;
+}
+
+export { getPayoutTime, toFixedIfNecessary, getEstimatedPayoutTime, isAddress };
