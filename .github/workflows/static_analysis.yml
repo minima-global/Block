@@ -9,6 +9,18 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Set Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: 'yarn'
+
+      - name: Install JS dependencies
+        run: yarn install
+
+      - name: Build production JS files
+        run: yarn run build
+
       - name: Get current time
         uses: josStorer/get-current-time@v2
         id: current-time
@@ -16,12 +28,12 @@ jobs:
           format: YYYY-MM-DD HH:mm:ss
           utcOffset: "0"
 
+      - name: Zip production files
+        run: yarn run zip
+
       - name: Get package info
         id: package
         uses: codex-team/action-nodejs-package-info@v1.1
-
-      - name: Zip production files
-        run: yarn run zip
 
       - name: Veracode Upload And Scan
         uses: veracode/veracode-uploadandscan-action@0.2.4
