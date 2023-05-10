@@ -31,5 +31,5 @@ jobs:
       - name: Artifact build files
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ steps.package.outputs.name }}-${{ steps.package.outputs.version }}.mds.zip
+          name: ${{ steps.package.outputs.name }}-${{ steps.package.outputs.version }}.mds
           path: /build
