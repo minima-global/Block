@@ -21,7 +21,7 @@ jobs:
         uses: codex-team/action-nodejs-package-info@v1.1
 
       - name: Zip production files
-        run: yarn run src:zip
+        run: yarn run zip
 
       - name: Veracode Upload And Scan
         uses: veracode/veracode-uploadandscan-action@0.2.4
