@@ -29,7 +29,7 @@ jobs:
           utcOffset: "0"
 
       - name: Zip production files
-        run: yarn run zip
+        run: yarn run src:zip
 
       - name: Get package info
         id: package
