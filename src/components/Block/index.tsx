@@ -34,7 +34,7 @@ const Block: React.FC<any> = ({ title, value, link = null, copy }) => {
       {copy && (
         <div>
           {!copied && (
-            <div className="absolute top-3 right-3 md:top-4 md:right-4">
+            <div className="absolute top-3 right-3 md:top-4 md:right-4 z-10">
               <Clipboard data-clipboard-text={value} onClick={() => setCopied(true)}>
                 <div className="flex items-center">
                   <img className="cursor-pointer" src={copySvg} alt="Copy" />
@@ -43,8 +43,8 @@ const Block: React.FC<any> = ({ title, value, link = null, copy }) => {
             </div>
           )}
           {copied && (
-            <div className="absolute top-3 right-3 md:top-4 md:right-4">
-              <div className="flex items-center">
+            <div className="absolute top-3 right-3 md:top-4 md:right-4 z-10">
+              <div className="flex items-center" onClick={() => null}>
                 <div className="text-sm text-green flex items-center gap-2">
                   Copied to clipboard <img src={checkCircleSvg} alt="Copied" />
                 </div>
