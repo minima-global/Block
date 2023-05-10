@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Block</title>
+    <% if (process.env.NODE_ENV === 'development' && process.env.REACT_APP_DEBUG === 'true') { %>
+    <script type="text/javascript">
+      var DEBUG = "%REACT_APP_DEBUG%";
+      var DEBUG_HOST = "%REACT_APP_DEBUG_HOST%";
+      var DEBUG_PORT = "%REACT_APP_DEBUG_MDS_PORT%";
+      var DEBUG_UID = "%REACT_APP_DEBUG_UID%";
+    </script>
+    <% } %>
+    <script defer src="%PUBLIC_URL%/mds.js"></script>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+{
+  "name": "block",
+  "version": "2.0.0",
+  "private": true,
+  "dependencies": {
+    "@amelix/react-lottie": "^1.2.4",
+    "@date-fns/utc": "^1.0.0",
+    "@react-spring/web": "^9.7.1",
+    "@stitches/react": "^1.2.8",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.3",
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.0.8",
+    "date-fns": "^2.29.3",
+    "decimal.js": "^10.4.3",
+    "lodash": "^4.17.21",
+    "lottie-react": "^2.4.0",
+    "prettier": "^2.8.3",
+    "react": "^18.2.0",
+    "react-div-100vh": "^0.7.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.4.3",
+    "react-scripts": "5.0.1",
+    "react-slide-routes": "^3.0.3",
+    "react-spring": "^9.7.1",
+    "react-transition-group": "^4.4.5",
+    "react-virtuoso": "^4.3.5",
+    "typescript": "^4.8.4",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build && npm run postbuild",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "package": "bash ./create-minima-app/package.sh",
+    "postbuild": "node ./create-minima-app/postbuild.js",
+    "zip": "npm run build && npm run postbuild && npm run package"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "homepage": "./",
+  "devDependencies": {
+    "@types/lodash": "^4.14.194",
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.20",
+    "tailwindcss": "^3.2.4"
+  }
+}
