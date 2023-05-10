@@ -1,6 +1,6 @@
 {
   "name": "block",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "private": true,
   "dependencies": {
     "@amelix/react-lottie": "^1.2.4",
@@ -20,6 +20,7 @@
     "lottie-react": "^2.4.0",
     "prettier": "^2.8.3",
     "react": "^18.2.0",
+    "react-clipboard.js": "^2.0.16",
     "react-div-100vh": "^0.7.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.3",
