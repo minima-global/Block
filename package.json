@@ -38,7 +38,8 @@
     "eject": "react-scripts eject",
     "package": "bash ./create-minima-app/package.sh",
     "postbuild": "node ./create-minima-app/postbuild.js",
-    "zip": "npm run build && npm run postbuild && npm run package"
+    "zip": "npm run build && npm run postbuild && npm run package",
+    "src:zip": "bash create-minima-app/zip.sh"
   },
   "eslintConfig": {
     "extends": [
