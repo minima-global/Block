@@ -8,7 +8,7 @@ import format from "date-fns/format";
 import { Link } from "react-router-dom";
 
 const Dashboard = () => {
-  const { loaded, data, groups, groupCounts, loadMore, query, handleQuery, search, searchResults } = useContext(appContext);
+  const { initialLoading, moreIsLoading, loaded, data, groups, groupCounts, loadMore, query, handleQuery, search, searchResults } = useContext(appContext);
   const [scrollPosition, setScrollPosition] = useState(0);
 
   useEffect(() => {
@@ -67,6 +67,29 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="flex-grow table-content">
+          {initialLoading && (
+            <div className="flex w-full h-full justify-center items-center">
+              <div className="text-center mb-3">
+                <div role="status" className="inline-block mx-auto mb-3">
+                  <div className="spinner-border" role="status">
+                    <span className="sr-only">Loading...</span>
+                  </div>
+                </div>
+                <div className="text-grey relative">Loading, please wait</div>
+              </div>
+            </div>
+          )}
+          {moreIsLoading && (
+            <div className="fixed bottom-5 right-8 z-30">
+              <div className="text-center">
+                <div role="status" className="inline-block mx-auto mb-3">
+                  <div className="spinner-border" role="status">
+                    <span className="sr-only">Loading...</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
           {query !== '' && searchResults === false && (
             <div className="grid grid-cols-12 py-12 p-4 text-sm text-center">
               <div className="col-span-12 text-grey">No results</div>

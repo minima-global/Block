@@ -7,6 +7,8 @@ export const appContext = createContext({} as any);
 
 const AppProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [loaded, setLoaded] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
+  const [moreIsLoading, setMoreIsLoading] = useState(false);
   const [currentBlock, setCurrentBlock] = useState<number | null>(null);
   const [transactions, setTransactions] = useState<any>([]);
   const [searchResults, setSearchResults] = useState<any>(null);
@@ -27,6 +29,7 @@ const AppProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
             // grab first twenty transaction pow's
             getManyTxPow(Number(response)).then((response) => {
               setTransactions(response);
+              setInitialLoading(false);
             })
           });
 
@@ -112,9 +115,12 @@ const AppProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   }, [transactions, query, searchResults]);
 
   const loadMore = () => {
+    setMoreIsLoading(true);
     getManyTxPow(transactions[transactions.length - 1].header.block)
       .then((response) => {
         setTransactions((prevState: any) => [...prevState, ...response]);
+      }).finally(() => {
+        setMoreIsLoading(false);
       });
   };
 
@@ -165,6 +171,8 @@ const AppProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
     handleQuery,
     search,
     searchResults,
+    initialLoading,
+    moreIsLoading,
   };
 
   return <appContext.Provider value={value}>{children}</appContext.Provider>;
