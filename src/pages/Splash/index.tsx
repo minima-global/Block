@@ -3,11 +3,20 @@ import Lottie from 'lottie-react';
 import splashAnimation from '../../splashAnimation.json';
 
 const Splash = () => {
-  const [displaySplash, setDisplaySplash] = React.useState(true);
+  const [displaySplash, setDisplaySplash] = React.useState(false);
+
+  React.useEffect(() => {
+    const splash = localStorage.getItem('__block_splash');
+
+    if (!splash) {
+      setDisplaySplash(true);
+    }
+  }, []);
 
   React.useEffect(() => {
     const timeout = setTimeout(() => {
       setDisplaySplash(false);
+      localStorage.setItem('__block_splash', '1');
     }, 1800);
 
     return () => {
@@ -23,7 +32,7 @@ const Splash = () => {
             <div className="mb-24">
               <Lottie animationData={splashAnimation} style={{ width: '125px' }} loop={false}  />
             </div>
-            <div className="absolute left-0 right-0 margin-auto bottom-20 text-white">Minima Block 2.0.4</div>
+            <div className="absolute left-0 right-0 margin-auto bottom-20 text-white">Minima Block 2.0.5</div>
           </div>
         </div>
       )}
