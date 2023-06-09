@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { createContext, useEffect, useMemo, useState } from "react";
-import { block, getManyTxPow, txPow, txPowByAddress, txPowById } from "./__minima__";
-import format from "date-fns/format";
+import { createContext, useEffect, useMemo, useState } from 'react';
+import { block, getManyTxPow, txPow, txPowByAddress, txPowById } from './__minima__';
+import format from 'date-fns/format';
 
 export const appContext = createContext({} as any);
 
@@ -19,9 +19,7 @@ const AppProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
       setLoaded(true);
 
       (window as any).MDS.init(async (msg: any) => {
-
-        if(msg.event === "inited"){
-
+        if (msg.event === 'inited') {
           // get current block
           block().then((response: any) => {
             setCurrentBlock(Number(response));
@@ -30,13 +28,13 @@ const AppProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
             getManyTxPow(Number(response)).then((response) => {
               setTransactions(response);
               setInitialLoading(false);
-            })
+            });
           });
 
           setLoaded(true);
         }
 
-        if(msg.event === "NEWBLOCK"){
+        if (msg.event === 'NEWBLOCK') {
           setCurrentBlock(Number(msg.data.txpow.header.block));
           txPow(Number(msg.data.txpow.header.block)).then((response) => {
             setTransactions((prevState: any) => [response, ...prevState]);
@@ -54,18 +52,17 @@ const AppProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
         data: [],
         groups: [],
         groupCounts: [],
-      }
+      };
     }
 
     if (query !== '' && searchResults && Array.isArray(searchResults)) {
       searchResults.forEach((transaction: any) => {
-
         const date = new Date(Number(transaction.header.timemilli));
         const day = format(date, 'dd');
         const month = format(date, 'MMM');
         const year = format(date, 'yyyy');
 
-        const str = `${day} ${month} ${year}`
+        const str = `${day} ${month} ${year}`;
 
         if (!lib[str]) {
           lib[str] = 1;
@@ -88,17 +85,16 @@ const AppProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
         data: [searchResults],
         groups: [format(date, 'dd MMM yyyy')],
         groupCounts: [1],
-      }
+      };
     }
 
     transactions.forEach((transaction: any) => {
-
       const date = new Date(Number(transaction.header.timemilli));
       const day = format(date, 'dd');
       const month = format(date, 'MMM');
       const year = format(date, 'yyyy');
 
-      const str = `${day} ${month} ${year}`
+      const str = `${day} ${month} ${year}`;
 
       if (!lib[str]) {
         lib[str] = 1;
@@ -115,13 +111,16 @@ const AppProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   }, [transactions, query, searchResults]);
 
   const loadMore = () => {
-    setMoreIsLoading(true);
-    getManyTxPow(transactions[transactions.length - 1].header.block)
-      .then((response) => {
-        setTransactions((prevState: any) => [...prevState, ...response]);
-      }).finally(() => {
-        setMoreIsLoading(false);
-      });
+    if (transactions[transactions.length - 1].header.block !== '1') {
+      setMoreIsLoading(true);
+      getManyTxPow(transactions[transactions.length - 1].header.block)
+        .then((response) => {
+          setTransactions((prevState: any) => [...prevState, ...response]);
+        })
+        .finally(() => {
+          setMoreIsLoading(false);
+        });
+    }
   };
 
   const handleQuery = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -135,27 +134,33 @@ const AppProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
     evt.preventDefault();
 
     if (query.includes('0x') || query.includes('Mx')) {
-      txPowById(query).then((response) => {
-        setSearchResults(response);
-      }).catch(() => {
-        txPowByAddress(query).then((response: any) => {
-          // search by address is returned as an array so only
-          // set search results if the array count is higher than 0
-          if (response.length > 0) {
-            setSearchResults(response);
-          } else {
-            setSearchResults(false);
-          }
-        }).catch(() => {
+      txPowById(query)
+        .then((response) => {
+          setSearchResults(response);
+        })
+        .catch(() => {
+          txPowByAddress(query)
+            .then((response: any) => {
+              // search by address is returned as an array so only
+              // set search results if the array count is higher than 0
+              if (response.length > 0) {
+                setSearchResults(response);
+              } else {
+                setSearchResults(false);
+              }
+            })
+            .catch(() => {
+              setSearchResults(false);
+            });
+        });
+    } else {
+      txPow(query)
+        .then((response) => {
+          setSearchResults(response);
+        })
+        .catch(() => {
           setSearchResults(false);
         });
-      });
-    } else {
-      txPow(query).then((response) => {
-        setSearchResults(response);
-      }).catch(() => {
-        setSearchResults(false);
-      });
     }
   };
 

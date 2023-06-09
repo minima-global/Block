@@ -23,7 +23,7 @@ const Splash = () => {
             <div className="mb-24">
               <Lottie animationData={splashAnimation} style={{ width: '125px' }} loop={false}  />
             </div>
-            <div className="absolute left-0 right-0 margin-auto bottom-20 text-white">Minima Block 2.0.0</div>
+            <div className="absolute left-0 right-0 margin-auto bottom-20 text-white">Minima Block 2.0.4</div>
           </div>
         </div>
       )}

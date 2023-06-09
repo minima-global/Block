@@ -68,7 +68,11 @@ export function getManyTxPow(from: number, amount = 30) {
   const promises = [];
 
   for (let i = 0; i < amount; i++) {
-    promises.push(txPow(from - i));
+    const block = from - i;
+
+    if (block > 0) {
+      promises.push(txPow(block));
+    }
   }
 
   return Promise.all(promises);
