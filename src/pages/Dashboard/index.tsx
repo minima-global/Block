@@ -52,7 +52,7 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="transition p-4 text-sm bg-grey-two font-bold text-grey pr-6">
-            <div className="grid grid-cols-12 table-content px-4">
+            <div className={`grid grid-cols-12 table-content ${scrollPosition !== 0 ? 'lg:px-4' : ''}`}>
               <div className="col-span-2 lg:col-span-1">
                 Block
               </div>
