@@ -48,7 +48,7 @@ const BlockInfo: React.FC<any> = ({ data, active, setActive }) => {
           <>
             {data.body.txn.inputs.length === 0 && (
               <div className="block p-4 bg-grey-two rounded">
-                <div className="text-sm lg:text-base text-grey">TXPOW is not a transaction</div>
+                <div className="text-sm lg:text-base text-grey">Open a transaction to check inputs and outputs.</div>
               </div>
             )}
             {data.body.txn.inputs.length > 0 && data.body.txn.inputs.map((input: any, index: any) => (
@@ -67,7 +67,7 @@ const BlockInfo: React.FC<any> = ({ data, active, setActive }) => {
           <>
             {data.body.txn.outputs.length === 0 && (
               <div className="block p-4 bg-grey-two rounded">
-                <div className="text-sm lg:text-base text-grey">TXPOW is not a transaction</div>
+                <div className="text-sm lg:text-base text-grey">Open a transaction to check inputs and outputs.</div>
               </div>
             )}
             {data.body.txn.outputs.length > 0 && data.body.txn.outputs.map((output: any, index: any) => (

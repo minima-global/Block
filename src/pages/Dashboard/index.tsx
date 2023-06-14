@@ -51,18 +51,20 @@ const Dashboard = () => {
               </form>
             </div>
           </div>
-          <div className="transition grid grid-cols-12 p-4 text-sm bg-grey-two font-bold text-grey pr-6">
-            <div className="col-span-2 lg:col-span-1">
-              Block
-            </div>
-            <div className="col-span-6 lg:col-span-8 pl-4">
-              Hash
-            </div>
-            <div className="col-span-2 lg:col-span-1 pl-3">
-              Txns
-            </div>
-            <div className="col-span-2 text-right">
-              Time
+          <div className="transition p-4 text-sm bg-grey-two font-bold text-grey pr-6">
+            <div className="grid grid-cols-12 table-content px-4">
+              <div className="col-span-2 lg:col-span-1">
+                Block
+              </div>
+              <div className="col-span-6 lg:col-span-8 pl-4">
+                Hash
+              </div>
+              <div className="col-span-2 lg:col-span-1 pl-3">
+                Txns
+              </div>
+              <div className="col-span-2 text-right">
+                Time
+              </div>
             </div>
           </div>
         </div>
