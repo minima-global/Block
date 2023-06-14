@@ -1,6 +1,6 @@
 {
   "name": "block",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "private": true,
   "dependencies": {
     "@amelix/react-lottie": "^1.2.4",
