@@ -82,7 +82,7 @@ const Dashboard = () => {
             </div>
           )}
           {moreIsLoading && (
-            <div className="fixed bottom-5 right-8 z-30">
+            <div className="fixed bottom-4 right-7 z-30">
               <div className="text-center">
                 <div role="status" className="inline-block mx-auto mb-3">
                   <div className="spinner-border" role="status">
@@ -125,7 +125,7 @@ const Dashboard = () => {
             endReached={loadMore}
           />
         </div>
-        <div className="fixed centered bottom-5 z-20">
+        <div className="fixed centered bottom-5 z-50">
           <div onClick={backToTop} className={`active:scale-95 cursor-pointer bg-grey py-3 px-6 rounded-full text-sm transition-transform transform ${scrollPosition > 30 ? 'scale-100' :'scale-0'}`}>
             Back to top
           </div>
