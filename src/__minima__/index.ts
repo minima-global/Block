@@ -1,3 +1,5 @@
+import log from '../utilities/log';
+
 export function sql(query: string, singleResult = true) {
   return new Promise((resolve, reject) => {
     (window as any).MDS.sql(query, function (response: any) {
@@ -18,7 +20,7 @@ export function sql(query: string, singleResult = true) {
 
 export function block() {
   return new Promise((resolve, reject) => {
-    (window as any).MDS.cmd('block', function(response: any) {
+    (window as any).MDS.cmd('block', function (response: any) {
       if (response.status) {
         return resolve(response.response.block);
       }
@@ -30,7 +32,8 @@ export function block() {
 
 export function txPowById(id: number | string) {
   return new Promise((resolve, reject) => {
-    (window as any).MDS.cmd(`txpow txpowid:${id}`, function(response: any) {
+    (window as any).MDS.cmd(`txpow txpowid:${id}`, function (response: any) {
+      log(response);
       if (response.status) {
         return resolve(response.response);
       }
@@ -42,7 +45,7 @@ export function txPowById(id: number | string) {
 
 export function txPow(id: number | string) {
   return new Promise((resolve, reject) => {
-    (window as any).MDS.cmd(`txpow block:${id}`, function(response: any) {
+    (window as any).MDS.cmd(`txpow block:${id}`, function (response: any) {
       if (response.status) {
         return resolve(response.response);
       }
@@ -54,7 +57,8 @@ export function txPow(id: number | string) {
 
 export function txPowByAddress(address: string) {
   return new Promise((resolve, reject) => {
-    (window as any).MDS.cmd(`txpow address:${address}`, function(response: any) {
+    (window as any).MDS.cmd(`txpow address:${address}`, function (response: any) {
+      log(response);
       if (response.status) {
         return resolve(response.response);
       }

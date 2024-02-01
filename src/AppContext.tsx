@@ -2,6 +2,7 @@ import * as React from 'react';
 import { createContext, useEffect, useMemo, useState } from 'react';
 import { block, getManyTxPow, txPow, txPowByAddress, txPowById } from './__minima__';
 import format from 'date-fns/format';
+import log from './utilities/log';
 
 export const appContext = createContext({} as any);
 
@@ -22,6 +23,7 @@ const AppProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
         if (msg.event === 'inited') {
           // get current block
           block().then((response: any) => {
+            log(JSON.stringify(response));
             setCurrentBlock(Number(response));
 
             // grab first twenty transaction pow's
@@ -54,8 +56,8 @@ const AppProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
         groupCounts: [],
       };
     }
-
     if (query !== '' && searchResults && Array.isArray(searchResults)) {
+      let txns: any[] = [];
       searchResults.forEach((transaction: any) => {
         const date = new Date(Number(transaction.header.timemilli));
         const day = format(date, 'dd');
@@ -69,10 +71,12 @@ const AppProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
         } else {
           lib[str] += 1;
         }
+
+        txns.push(transaction);
       });
 
       return {
-        data: transactions,
+        data: txns,
         groups: Object.keys(lib),
         groupCounts: Object.values(lib),
       };
@@ -150,6 +154,7 @@ const AppProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
               }
             })
             .catch(() => {
+              log('Throwing an error!');
               setSearchResults(false);
             });
         });

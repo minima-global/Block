@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { throttle } from 'lodash';
-import { GroupedVirtuoso } from "react-virtuoso";
-import { useContext, useEffect, useState } from "react";
-import { appContext } from "../../AppContext";
+import { GroupedVirtuoso } from 'react-virtuoso';
+import { useContext, useEffect, useState } from 'react';
+import { appContext } from '../../AppContext';
 import TitleBar from '../../components/TitleBar';
-import format from "date-fns/format";
-import { Link } from "react-router-dom";
+import format from 'date-fns/format';
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
   const { initialLoading, moreIsLoading, loaded, data, groups, groupCounts, loadMore, query, handleQuery, search, searchResults } = useContext(appContext);
@@ -25,7 +25,7 @@ const Dashboard = () => {
 
       return () => {
         el.removeEventListener('scroll', throttledOnScroll);
-      }
+      };
     }
   }, [loaded]);
 
@@ -38,14 +38,27 @@ const Dashboard = () => {
       <TitleBar home />
       <div className="flex flex-col flex-grow text-white overflow-hidden">
         <div className={`bg-grey-two table-header transition ease-in-out duration-75 ${scrollPosition === 0 ? '' : 'table-header--active'}`}>
-          <div className={`${scrollPosition === 0 ? 'opacity-100' :'opacity-0'} pt-4 pb-2 px-4`}>
+          <div className={`${scrollPosition === 0 ? 'opacity-100' : 'opacity-0'} pt-4 pb-2 px-4`}>
             <div className="relative w-full">
               <form onSubmit={search}>
-                <input value={query} onChange={handleQuery} type="text" className="outline-none text-black w-full py-3 pl-4 pr-12 rounded" placeholder="Search by address, block or txpowid" />
+                <input
+                  value={query}
+                  onChange={handleQuery}
+                  type="text"
+                  className="outline-none text-black bg-slate-100 w-full py-3 pl-4 pr-12 rounded focus:outline focus:outline-teal-200 focus:bg-white"
+                  placeholder="Search by address, block or txpowid"
+                />
                 <button type="submit">
                   <svg className="active:scale-90 transition absolute top-3 right-3" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M18.3913 10.6957C18.3913 14.9458 14.9459 18.3913 10.6957 18.3913C6.44546 18.3913 3 14.9458 3 10.6957C3 6.44546 6.44546 3 10.6957 3C14.9459 3 18.3913 6.44546 18.3913 10.6957Z" stroke="#08090B" strokeWidth="2" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M21 21L17 17" stroke="#08090B" strokeWidth="2" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path
+                      d="M18.3913 10.6957C18.3913 14.9458 14.9459 18.3913 10.6957 18.3913C6.44546 18.3913 3 14.9458 3 10.6957C3 6.44546 6.44546 3 10.6957 3C14.9459 3 18.3913 6.44546 18.3913 10.6957Z"
+                      stroke="#08090B"
+                      strokeWidth="2"
+                      strokeMiterlimit="10"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path d="M21 21L17 17" stroke="#08090B" strokeWidth="2" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </button>
               </form>
@@ -53,18 +66,10 @@ const Dashboard = () => {
           </div>
           <div className="transition p-4 text-sm bg-grey-two font-bold text-grey pr-6">
             <div className={`grid grid-cols-12 table-content ${scrollPosition !== 0 ? 'lg:px-4' : ''}`}>
-              <div className="col-span-2 lg:col-span-1">
-                Block
-              </div>
-              <div className="col-span-6 lg:col-span-8 pl-4">
-                Hash
-              </div>
-              <div className="col-span-2 lg:col-span-1 pl-3">
-                Txns
-              </div>
-              <div className="col-span-2 text-right">
-                Time
-              </div>
+              <div className="col-span-2 lg:col-span-1">Block</div>
+              <div className="col-span-6 lg:col-span-8 pl-4">Hash</div>
+              <div className="col-span-2 lg:col-span-1 pl-3">Txns</div>
+              <div className="col-span-2 text-right">Time</div>
             </div>
           </div>
         </div>
@@ -102,10 +107,10 @@ const Dashboard = () => {
             groupCounts={groupCounts}
             style={{ height: '100%' }}
             className={`dataTable custom-scrollbar ${query !== '' && searchResults === false ? 'hidden' : ''}`}
-            groupContent={index => {
-              return <div className="sticky-header font-bold text-grey text-sm py-2 px-3">{groups[index]}</div>
+            groupContent={(index) => {
+              return <div className="sticky-header font-bold text-grey text-sm py-2 px-3">{groups[index]}</div>;
             }}
-            itemContent={index => {
+            itemContent={(index) => {
               if (data.length === 0) {
                 return;
               }
@@ -115,18 +120,21 @@ const Dashboard = () => {
                   <div className="grid grid-cols-12 p-4 text-sm border-b border-custom-grey active:selection">
                     <div className="col-span-2 lg:col-span-1">{data[index].header.block}</div>
                     <div className="col-span-6 lg:col-span-8 pl-4 overflow-hidden text-ellipsis pr-5">{data[index].txpowid}</div>
-                    <div className="col-span-2 lg:col-span-1 pl-3">{data[index].body.txnlist.length}</div>
+                    <div className="col-span-2 lg:col-span-1 pl-3">{data[index].body.txnlist.length + data[index].istransaction ? 1 : 0}</div>
                     <div className="col-span-2 text-right ">{format(new Date(Number(data[index].header.timemilli)), 'HH:mm:ss')}</div>
                   </div>
                 </Link>
-              )
+              );
             }}
             overscan={200}
             endReached={loadMore}
           />
         </div>
         <div className="fixed centered bottom-5 z-50">
-          <div onClick={backToTop} className={`active:scale-95 cursor-pointer bg-grey py-3 px-6 rounded-full text-sm transition-transform transform ${scrollPosition > 30 ? 'scale-100' :'scale-0'}`}>
+          <div
+            onClick={backToTop}
+            className={`active:scale-95 cursor-pointer bg-grey py-3 px-6 rounded-full text-sm transition-transform transform ${scrollPosition > 30 ? 'scale-100' : 'scale-0'}`}
+          >
             Back to top
           </div>
         </div>
