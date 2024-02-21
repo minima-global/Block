@@ -120,7 +120,8 @@ const Dashboard = () => {
                   <div className="grid grid-cols-12 p-4 text-sm border-b border-custom-grey active:selection">
                     <div className="col-span-2 lg:col-span-1">{data[index].header.block}</div>
                     <div className="col-span-6 lg:col-span-8 pl-4 overflow-hidden text-ellipsis pr-5">{data[index].txpowid}</div>
-                    <div className="col-span-2 lg:col-span-1 pl-3">{data[index].body.txnlist.length + data[index].istransaction ? 1 : 0}</div>
+                    {data[index].istransaction && <div className="col-span-2 lg:col-span-1 pl-3">{data[index].body.txnlist.length + 1}</div>}
+                    {!data[index].istransaction && <div className="col-span-2 lg:col-span-1 pl-3">{data[index].body.txnlist.length}</div>}                    
                     <div className="col-span-2 text-right ">{format(new Date(Number(data[index].header.timemilli)), 'HH:mm:ss')}</div>
                   </div>
                 </Link>
