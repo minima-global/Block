@@ -3,9 +3,13 @@ import Lottie from 'lottie-react';
 import splashAnimation from '../../splashAnimation.json';
 import getAppUID from '../../utilities/getAppUID';
 
+import * as packageJson from '../../../package.json';
+
 const Splash = () => {
   const localStorageItemName = '__block_splash';
   const [displaySplash, setDisplaySplash] = React.useState(false);
+
+  const { version: appVersion } = packageJson;
 
   React.useEffect(() => {
     const appUID = getAppUID();
@@ -36,7 +40,7 @@ const Splash = () => {
             <div className="mb-24">
               <Lottie animationData={splashAnimation} style={{ width: '125px' }} loop={false} />
             </div>
-            <div className="absolute left-0 right-0 margin-auto bottom-20 text-white">Minima Block 2.3.1</div>
+            <div className="absolute left-0 right-0 margin-auto bottom-20 text-white">Minima Block {appVersion}</div>
           </div>
         </div>
       )}

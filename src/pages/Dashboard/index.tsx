@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { throttle } from 'lodash';
 import { GroupedVirtuoso } from 'react-virtuoso';
 import { useContext, useEffect, useState } from 'react';
